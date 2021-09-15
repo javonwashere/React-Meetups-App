@@ -1,9 +1,15 @@
-function Todo() {
+function Todo({ text }) {
+  function deleteHandler() {
+    console.log('clicked!');
+  }
+  
   return (
     <div className="card">
-      <h2>TITLE</h2>
+      <h2>{text}</h2>ß
       <div className="actions">
-        <button className="btn">Delete</button>
+        <button className="btn" onClick={deleteHandler}>
+          Delete
+        </button>
       </div>
     </div>
   );
