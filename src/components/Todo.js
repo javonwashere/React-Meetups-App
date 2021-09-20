@@ -24,7 +24,7 @@ function Todo({ text }) {
           Delete
         </button>
       </div>
-      {modalIsOpen && <Modal />}
+      {modalIsOpen && <Modal onCancel={closeModal} onConfirm={closeModal}/>}
       {modalIsOpen && <Backdrop onClick={closeModal}/>}
     </div>
   );
