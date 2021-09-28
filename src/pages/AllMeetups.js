@@ -28,15 +28,45 @@ function AllMeetupsPage() {
   let url =
     'https://react-getting-started-d23e9-default-rtdb.firebaseio.com/meetups.json';
 
+  const createMeetupsArray = (data) => {
+    const meetups = [];
+
+    for (const key in data) {
+      const meetup = {
+        id: key,
+        ...data[key],
+      };
+      meetups.push(meetup);
+    }
+    return meetups;
+  };
+
+  // PROMISES
+  // useEffect(() => {
+  //   fetch(url)
+  //     .then((response) => {
+  //       console.log('RESPONSE', response);
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       const meetupsArray = createMeetupsArray(data);
+  //       setIsLoading(false);
+  //       setLoadedMeetups(meetupsArray);
+  //     });
+  // }, []);
+
+  // ASYNC / AWAIT
   useEffect(() => {
-    fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setIsLoading(false);
-        setLoadedMeetups(data);
-      });
+    async function fetchMeetups() {
+      let url =
+        'https://react-getting-started-d23e9-default-rtdb.firebaseio.com/meetups.json';
+      const response = await fetch(url);
+      const data = await response.json();
+      const meetupsArray = createMeetupsArray(data);
+      setIsLoading(false);
+      setLoadedMeetups(meetupsArray);
+    }
+    fetchMeetups();
   }, []);
 
   if (isLoading) {
@@ -50,7 +80,7 @@ function AllMeetupsPage() {
   return (
     <section>
       <h1>All Meetups</h1>
-      <MeetupList meetups={DUMMY_DATA} />
+      <MeetupList meetups={loadedMeetups} />
     </section>
   );
 }
